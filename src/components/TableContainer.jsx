@@ -25,7 +25,7 @@ const TableContainer = () => {
   useEffect(() => {
     const fetchTables = async () => {
       try {
-        const response = await axios.get('api/getSpecifications');
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/getSpecifications`);
         const data = Array.isArray(response.data) ? response.data : [];
         setTables(data);
       } catch (error) {
@@ -38,7 +38,7 @@ const TableContainer = () => {
 
   const handleSaveSpecification = async () => {
     try {
-      const response = await axios.post('api/saveSpecification', { title: specificationTitle, tables });
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/saveSpecification`, { title: specificationTitle, tables });
       console.log('Specification saved successfully:', response.data);
       setSpecificationTitle('');
       setTables([]); // Limpiar tablas en la UI
