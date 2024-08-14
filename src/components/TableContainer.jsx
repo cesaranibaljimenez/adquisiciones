@@ -25,8 +25,9 @@ const TableContainer = () => {
   useEffect(() => {
     const fetchTables = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/getSpecifications');
-        setTables(response.data);
+        const response = await axios.get('api/getSpecifications');
+        const data = Array.isArray(response.data) ? response.data : [];
+        setTables(data);
       } catch (error) {
         console.error('Error fetching tables:', error);
       }
@@ -37,7 +38,7 @@ const TableContainer = () => {
 
   const handleSaveSpecification = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/saveSpecification', { title: specificationTitle, tables });
+      const response = await axios.post('api/saveSpecification', { title: specificationTitle, tables });
       console.log('Specification saved successfully:', response.data);
       setSpecificationTitle('');
       setTables([]); // Limpiar tablas en la UI
@@ -142,7 +143,7 @@ const TableContainer = () => {
 
       <h2>Tablas</h2>
       <div ref={drop} style={{ padding: '20px', border: isOver ? '2px solid green' : '2px solid black' }}>
-        {tables.map((table) => (
+        {Array.isArray(tables) && tables.map((table) => (
           <div key={table.id} style={{ marginBottom: '20px' }}>
             <h3>
               {table.label}{' '}
@@ -195,3 +196,4 @@ const DraggableColumnLabel = ({ label }) => {
 };
 
 export default TableContainer;
+
