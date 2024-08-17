@@ -10,7 +10,7 @@ const Specifications = () => {
   useEffect(() => {
     const fetchSpecifications = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/getSpecifications');
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/getSpecifications`);
         setSpecifications(response.data);
       } catch (error) {
         console.error('Error fetching specifications:', error);
